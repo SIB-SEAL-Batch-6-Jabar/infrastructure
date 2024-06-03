@@ -16,10 +16,12 @@ jobs:
               uses: hashicorp/setup-terraform@v3
 
             - name: Terraform Init
-              run: terraform init -var="aws_access_key_id="${{ secrets.AWS_ACCESS_KEY_ID }}"" -var="aws_secret_access_key="${{ secrets.AWS_SECRET_ACCESS_KEY }}"" -var="aws_session_token="${{ secrets.AWS_SESSION_TOKEN}}"" -var="aws_region="${{ vars.AWS_REGION }}""
+              run: terraform init
+              working-directory: .
 
             - name: Terraform Plan
               run: terraform plan -var="aws_access_key_id="${{ secrets.AWS_ACCESS_KEY_ID }}"" -var="aws_secret_access_key="${{ secrets.AWS_SECRET_ACCESS_KEY }}"" -var="aws_session_token="${{ secrets.AWS_SESSION_TOKEN}}"" -var="aws_region="${{ vars.AWS_REGION }}""
+              working-directory: .
 
             - name: Terraform Apply
               run: terraform apply -auto-approve -var="aws_access_key_id="${{ secrets.AWS_ACCESS_KEY_ID }}"" -var="aws_secret_access_key="${{ secrets.AWS_SECRET_ACCESS_KEY }}"" -var="aws_session_token="${{ secrets.AWS_SESSION_TOKEN}}"" -var="aws_region="${{vars.AWS_REGION}}""
