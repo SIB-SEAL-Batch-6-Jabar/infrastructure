@@ -47,3 +47,21 @@ resource "aws_db_subnet_group" "simanis-subnet-g" {
     Env = var.tags["Env"]
   }
 }
+
+resource "null_resource" "create_db" {
+  provisioner "local-exec" {
+    command = <<EOT
+      psql "host=${aws_db_instance.simanis-db.endpoint} port=5432 user=${var.username} password=${var.password} sslmode=require" <<EOF
+      CREATE DATABASE simanis;
+      \q
+      EOF
+    EOT
+
+    # environment = {
+    #   PGPASSWORD = var.password
+    # }
+  }
+
+  depends_on = [aws_db_instance.simanis-db]
+}
+
