@@ -11,6 +11,7 @@ resource "aws_db_instance" "simanis-db" {
     vpc_security_group_ids = [aws_security_group.simanis-rds-sg.id]
     db_subnet_group_name   = aws_db_subnet_group.simanis-subnet-g.name
     skip_final_snapshot = true
+    publicly_accessible = true
 
   tags = {
     Name = var.tags["Name"]
