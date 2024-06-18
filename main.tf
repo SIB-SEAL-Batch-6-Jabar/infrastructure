@@ -11,7 +11,7 @@ module "vpc" {
 
 module "ecr" {
   source = "./demo/ecr"
-  repo   = [ "frontend", "broker", "worker" ]
+  repo   = [ "simanis-core-web-next", "simanis-core-backend-flask-prod", "simanis-core-backend-flask-celery" ]
   tags   = {"Name": "simanis", "Env":"demo"}
 }
 
