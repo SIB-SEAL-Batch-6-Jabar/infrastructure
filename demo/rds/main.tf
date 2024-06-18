@@ -38,15 +38,15 @@ resource "aws_security_group" "simanis-rds-sg" {
   }
 }
 
-# resource "aws_db_subnet_group" "simanis-subnet-g" {
-#   name       = "my-db-subnet-group"
-#   subnet_ids = var.aws_public_subnet
+resource "aws_db_subnet_group" "simanis-subnet-g" {
+  name       = "my-db-subnet-group"
+  subnet_ids = var.aws_public_subnet
 
-#   tags = {
-#     Name = var.tags["Name"]
-#     Env = var.tags["Env"]
-#   }
-# }
+  tags = {
+    Name = var.tags["Name"]
+    Env = var.tags["Env"]
+  }
+}
 
 # resource "null_resource" "create_db" {
 #   provisioner "local-exec" {
