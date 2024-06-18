@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "tf-simanis-state"
+    bucket = "tf-simanis-state-demo"
     key = "states"
     region = "us-east-1"
   }

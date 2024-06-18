@@ -1,5 +1,6 @@
 resource "aws_ecr_repository" "simanis" {
-    name = var.repo
+    count = length(var.repo)
+    name = var.repo[count.index]
     tags = {
         Name = var.tags["Name"]
         Env = var.tags["Env"]

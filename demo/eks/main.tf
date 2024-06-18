@@ -42,7 +42,7 @@ resource "aws_eks_node_group" "simanis-ng" {
 }
 
 resource "aws_security_group" "simanis-sg" {
-  name        = "simanis-g"
+  name        = "simanis-sg"
   vpc_id      = var.vpc_id
 
   ingress {
