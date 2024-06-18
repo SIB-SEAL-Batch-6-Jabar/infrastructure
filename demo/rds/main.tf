@@ -38,37 +38,37 @@ resource "aws_security_group" "simanis-rds-sg" {
   }
 }
 
-resource "aws_db_subnet_group" "simanis-subnet-g" {
-  name       = "my-db-subnet-group"
-  subnet_ids = var.aws_public_subnet
+# resource "aws_db_subnet_group" "simanis-subnet-g" {
+#   name       = "my-db-subnet-group"
+#   subnet_ids = var.aws_public_subnet
 
-  tags = {
-    Name = var.tags["Name"]
-    Env = var.tags["Env"]
-  }
-}
+#   tags = {
+#     Name = var.tags["Name"]
+#     Env = var.tags["Env"]
+#   }
+# }
 
-resource "null_resource" "create_db" {
-  provisioner "local-exec" {
-    command = <<EOT
-      if ! command -v psql &> /dev/null
-      then
-          echo "psql could not be found, installing..."
-          sudo apt-get update
-          sudo apt-get install -y wget ca-certificates
-          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-          echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client-16
-      else
-          echo "psql is already installed"
-      fi
+# resource "null_resource" "create_db" {
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       if ! command -v psql &> /dev/null
+#       then
+#           echo "psql could not be found, installing..."
+#           sudo apt-get update
+#           sudo apt-get install -y wget ca-certificates
+#           wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+#           echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+#           sudo apt-get update
+#           sudo apt-get install -y postgresql-client-16
+#       else
+#           echo "psql is already installed"
+#       fi
 
-      export PGPASSWORD=${var.password}
-      psql --host=${aws_db_instance.simanis-db.endpoint} --port=5432 --username=${var.username} --dbname=postgres --command="CREATE DATABASE simanis;"
-    EOT
-  }
+#       export PGPASSWORD=${var.password}
+#       psql --host=${aws_db_instance.simanis-db.endpoint} --port=5432 --username=${var.username} --dbname=postgres --command="CREATE DATABASE simanis;"
+#     EOT
+#   }
 
-  depends_on = [aws_db_instance.simanis-db]
-}
+#   depends_on = [aws_db_instance.simanis-db]
+# }
 
